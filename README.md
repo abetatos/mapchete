@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="10%" alt="mapchete_final" src="https://user-images.githubusercontent.com/76526314/219464092-ee4e075c-c8c7-4d39-8017-cb0ede17248f.png">
+  <img width="300" alt="mapchete_final" src="https://user-images.githubusercontent.com/76526314/219464092-ee4e075c-c8c7-4d39-8017-cb0ede17248f.png">
 </p>
 
 <h3 align="center">
