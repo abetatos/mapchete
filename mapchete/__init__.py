@@ -1,4 +1,4 @@
-from mapchete import MatcheteFarm
+from mapchete import MAPchete
 from basechete import BaseChete
 from maxchete import MaxChete
 from seqchete import SeqChete
