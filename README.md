@@ -30,8 +30,6 @@ Iterations | Random | MAXchete
 std (1000 iter) | &plusmn; 9.1  |  &plusmn; 3.9
 
 
-The input file was a geotiff of shape: 
-
 Compared to the random sample, the data is now more evenly distributed and the standard deviation has been reduced by over 2 times which shows library's effectiveness.
 
 # How does it work?
