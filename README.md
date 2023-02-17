@@ -38,7 +38,7 @@ There are three ways of creating your dataset:
 - sequential
 - maxchete
 
-Just instantiate your class and machete the data!
+Just instantiate the class and machete the data!
 
 ```python 
 mchete = MAPchete(input_file, size=512, output_path="raster_clip", clear_output_path=True)
