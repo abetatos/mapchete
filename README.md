@@ -43,8 +43,8 @@ There are three ways of creating your dataset:
 Just instantiate the class and machete the data!
 
 ```python 
-mchete = MAPchete(input_file, size=512, output_path="raster_clip", clear_output_path=True).get("maxchete")
-mchete.get_rasters(identifier=input_file, n_images=100, no_data_percentage = 0.2)
+mc = MAPchete(input_file, size=512, output_path="raster_clip", clear_output_path=True).get("maxchete")
+mc.get_rasters(identifier=input_file, n_images=100, no_data_percentage = 0.2)
 
 ```
 
