@@ -25,3 +25,5 @@ def RandChete(BaseChete):
             if valid: 
                 self.final_counter_array[i: self.size + i, j: self.size + j] += 1
             self.save_raster(new_array, profile, valid, f"{identifier}_random_{i}")
+        
+        self.output_mesage()

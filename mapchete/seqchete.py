@@ -6,13 +6,11 @@ from rasterio.windows import Window
 
 from mapchete import BaseChete
 
-
 def SeqChete(BaseChete): 
     
     def get_window(self, i, j):
         return Window(row_off=i, col_off=j, width=self.size, height=self.size)
     
-   
     def get_rasters(self, no_data_percentage=0.2, n_images=20, identifier = ""):
         
         images_done = 0
@@ -34,5 +32,8 @@ def SeqChete(BaseChete):
             else: 
                 continue
             break
+        
+        self.output_mesage()
+        
                 
             

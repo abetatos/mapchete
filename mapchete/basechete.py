@@ -1,70 +1,13 @@
-from abc import abstractmethod
-import matplotlib.pyplot as plt
-from skimage.transform import resize
-from typing import Any
-from tqdm.auto import tqdm
-import numpy as np
-import random 
-import logging
-import shutil
 import os
+from abc import abstractmethod
 
 import rasterio as rio
-from rasterio.windows import Window, get_data_window, transform
-
-EMPTY_VALID_DICT = {
-    1: 0, 
-    0: 0
-}
+from skimage.transform import resize
+import matplotlib.pyplot as plt
+import numpy as np
 
 
 class BaseChete:
-    
-    def __init__(self, filepath: str, size: int=512, output_path: str="raster_clip", clear_output_path: bool=True, log_level: Any[str, int]=logging.DEBUG) -> None:        
-        """_summary_
-
-        Args:
-            filepath (_type_): _description_
-            size (int, optional): _description_. Defaults to 512.
-            output_path (str, optional): _description_. Defaults to "raster_clip".
-            clear_output_path (bool, optional): _description_. Defaults to True.
-            log_level (_type_, optional): _description_. Defaults to logging.DEBUG.
-        """
-        self.logger = logging.getLogger("Clip")
-        self.logger.setLevel(log_level)
-        
-        # Clean 
-        with rio.open(filepath) as src:
-            profile = src.profile.copy()
-            data_window = get_data_window(src.read(masked=True))
-            data_transform = transform(data_window, src.transform)
-            profile.update(
-                transform=data_transform,
-                height=data_window.height,
-                width=data_window.width)
-
-            data = src.read(window=data_window)
-            self.array = data[0]
-            
-        self.tmp = os.path.join(output_path, "tmp.tiff")
-        with rio.open(self.tmp, 'w', **profile) as dst:
-            dst.write(data)
-            
-        with rio.open(self.tmp) as src:
-             
-            self.rasterfile = src
-        
-            self.width = self.rasterfile.width
-            self.height = self.rasterfile.height
-            self.nodata = self.rasterfile.nodata
-        
-        self.size = size
-        self.output_path = output_path
-        if clear_output_path: 
-            shutil.rmtree(output_path, ignore_errors=True)
-        
-        self.crop_function = None
-        self.valid_dict = EMPTY_VALID_DICT.copy()
     
     
     @abstractmethod
@@ -97,6 +40,11 @@ class BaseChete:
         
         return new_array, profile, valid
     
+    def output_mesage(self): 
+        valid_percentage = round(self.valid_dict[1] / (self.valid_dict[1] + self.valid_dict[0])*100, 1)
+        self.logger.info(f"Process finished with {self.valid_dict[1]} files created"
+                         f"which represents {valid_percentage}% of the indicated number.")
+        
     def save_raster(self, new_array, profile, valid, identifier):
         if valid:  
             self.valid_dict[1]+=1
@@ -108,7 +56,7 @@ class BaseChete:
                 print("Writing error", e)
         else:
             self.valid_dict[0]+=1
-    
+
     def get_3Ddistribution(self):
         final_counter_array = self.final_counter_array
         bottle_resized = resize(final_counter_array, (300, 300))

@@ -50,7 +50,7 @@ def MaxChete(BaseChete):
         self.counter_array = np.zeros_like(self.array)
         self.final_counter_array = np.zeros_like(self.array)
 
-        for n_image in tqdm(range(n_images)):
+        for n_image in tqdm(range(n_images), disable=):
             
             window = self.get_window(no_data_percentage)
             if window is None:
@@ -59,5 +59,5 @@ def MaxChete(BaseChete):
             new_array, profile, valid = self.get_raster(window, no_data_percentage)
             self.save_raster(new_array, profile, valid, f"{identifier}_maximize_area_{n_image}")
         
-    
+        self.output_mesage()
     
