@@ -15,10 +15,13 @@ Welcome to my Github project! This repository was created to assist with the pre
 <label>Distribution of tiles</label>
 <p align="center">
   <label>Random</label>
-  ![image](https://user-images.githubusercontent.com/76526314/219666167-64e7f0a8-df76-4422-8665-a6f908b0a98b.png)
+  <img width="45%" alt="mapchete_final" src="https://user-images.githubusercontent.com/76526314/219666167-64e7f0a8-df76-4422-8665-a6f908b0a98b.png">
+  
 &nbsp; &nbsp; &nbsp; &nbsp;
   <label>Maxchete</label>
-  ![image](https://user-images.githubusercontent.com/76526314/219665645-7eefad2e-bc33-43cb-99fa-5374f6c84ea4.png)
+  
+  <img width="45%" alt="mapchete_final" src="https://user-images.githubusercontent.com/76526314/219665645-7eefad2e-bc33-43cb-99fa-5374f6c84ea4.png">
+  
 </p>
 
 
