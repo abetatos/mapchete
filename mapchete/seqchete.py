@@ -1,7 +1,4 @@
-import random
-
 import numpy as np
-from tqdm.auto import tqdm
 from rasterio.windows import Window
 
 from mapchete import BaseChete

@@ -1,12 +1,12 @@
-from mapchete import RandChete, SeqChete, MaxChete
-
-from typing import Any
+import os
 import logging
 import shutil
-import os
+from typing import Any
 
 import rasterio as rio
 from rasterio.windows import get_data_window, transform
+
+from mapchete import RandChete, SeqChete, MaxChete
 
 EMPTY_VALID_DICT = {
     1: 0, 

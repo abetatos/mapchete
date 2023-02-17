@@ -40,11 +40,6 @@ class BaseChete:
         
         return new_array, profile, valid
     
-    def output_mesage(self): 
-        valid_percentage = round(self.valid_dict[1] / (self.valid_dict[1] + self.valid_dict[0])*100, 1)
-        self.logger.info(f"Process finished with {self.valid_dict[1]} files created"
-                         f"which represents {valid_percentage}% of the indicated number.")
-        
     def save_raster(self, new_array, profile, valid, identifier):
         if valid:  
             self.valid_dict[1]+=1
@@ -56,6 +51,19 @@ class BaseChete:
                 print("Writing error", e)
         else:
             self.valid_dict[0]+=1
+            
+    def output_mesage(self): 
+        valid_percentage = round(self.valid_dict[1] / (self.valid_dict[1] + self.valid_dict[0])*100, 1)
+        self.logger.info(f"Process finished with {self.valid_dict[1]} files created"
+                         f"which represents {valid_percentage}% of the indicated number.")
+    
+    def check_iteration(self): 
+        
+        if self.nodata != self.array.max() and self.nodata != self.array.min():
+            raise ValueError("Value nodata must be the minimum or maximum value of the input")
+        
+        if self.counter_array.min() > 0  and self.final_counter_array.max() == 0: 
+            raise ValueError("Looks like your data is empty")
 
     def get_3Ddistribution(self):
         final_counter_array = self.final_counter_array
