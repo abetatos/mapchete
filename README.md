@@ -21,7 +21,7 @@ With an input of shape:
   <img width="300" alt="mapchete_final" src="https://user-images.githubusercontent.com/76526314/219682129-756f265c-6f4c-4c20-bc2e-bc5e438f4721.png">
 </p>
 
-We obtain a distribution:
+You can see the differences between both images, and that effectively, matchete can optimize the process. 
 
 Random | MAXchete
 --- | ---
