@@ -21,7 +21,7 @@ With an input of shape:
   <img width="300" alt="mapchete_final" src="https://user-images.githubusercontent.com/76526314/219682129-756f265c-6f4c-4c20-bc2e-bc5e438f4721.png">
 </p>
 
-Mapchete obtains: 
+How is the spatial distribution of tiles? 
 
 Iterations | RANDchete (random) | MAXchete (maximize)
 --- | --- | ---
