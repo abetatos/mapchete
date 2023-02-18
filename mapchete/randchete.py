@@ -4,10 +4,10 @@ import numpy as np
 from tqdm.auto import tqdm
 from rasterio.windows import Window
 
-from mapchete import BaseChete
+from .basechete import BaseChete
 
 
-def RandChete(BaseChete): 
+class RandChete(BaseChete): 
     
     def get_window(self):
         xmin, xmax = 0, self.height - self.size
@@ -20,10 +20,10 @@ def RandChete(BaseChete):
         self.final_counter_array = np.zeros_like(self.array)
         
         for i in tqdm(range(1, n_images+1)): 
-            i, j, window = self.get_random_window()
-            new_array, profile, valid = self.get_raster(window, no_data_percentage)
+            i, j, window = self.get_window()
+            new_array, profile, valid = self.get_raster(window)
             if valid: 
                 self.final_counter_array[i: self.size + i, j: self.size + j] += 1
-            self.save_raster(new_array, profile, valid, f"{identifier}_random_{i}")
+            self.save_raster(new_array, profile, valid, f"{identifier}_randchete_{i}")
         
         self.output_mesage()

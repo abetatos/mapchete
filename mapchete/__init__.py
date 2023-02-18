@@ -1,5 +1,2 @@
-from mapchete import MAPchete
-from basechete import BaseChete
-from maxchete import MaxChete
-from seqchete import SeqChete
-from randchete import RandChete
+from .farmchete import FARMchete
+from .utils.merge_tiffs import merge_tiffs
