@@ -9,15 +9,16 @@ from .maxchete import MaxChete
 
 
 class FARMchete():
-    
-    
+
+    def __init__(self, filepath) -> None:
+        self.filepath = filepath
+
     def get(self, crop_type):
         assert crop_type in {"randchete", "seqchete", "maxchete"}
-        
-        if crop_type == "randchete": 
-            return RandChete
+
+        if crop_type == "randchete":
+            return RandChete(self.filepath)
         if crop_type == "seqchete":
-            return SeqChete
+            return SeqChete(self.filepath)
         if crop_type == "maxchete":
-            return MaxChete
-        
+            return MaxChete(self.filepath)

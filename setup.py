@@ -21,7 +21,6 @@ setup(
     license = "Apache 2",
     url = "https://github.com/abetatos/mapchete",
     packages=['mapchete'],
-    # requires=["rasterio"],
     install_requires=read("requirements.txt", "readlines"),
     long_description=read("README.md"),
     classifiers=[

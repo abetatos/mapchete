@@ -1,4 +1,4 @@
-earthpy==0.9.4
+rasterio  # ==1.2.10
 matplotlib==3.5.3
 scikit-image==0.19.3
 tqdm==4.64.1
