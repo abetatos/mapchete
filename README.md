@@ -70,7 +70,8 @@ fig, ax = maxchete.get_3Ddistribution()
 </p>
 
 
-There is another useful function called merge_tiffs which can merge generated images to se whether it has been properly created. 
+There is another useful function called merge_tiffs which can merge generated images to se how the distribution was generated. Useful when lower sampling as higher ones should take the complete extent of the original input. 
+
 ``` python
 from mapchete import merge_tiffs
 merge_tiffs()
