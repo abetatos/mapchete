@@ -21,7 +21,7 @@ With an input of shape:
   <img width="300" alt="mapchete_final" src="https://user-images.githubusercontent.com/76526314/219682129-756f265c-6f4c-4c20-bc2e-bc5e438f4721.png">
 </p>
 
-How is the spatial distribution of tiles? 
+How is the spatial distribution of tiles? (Not normalized scales)
 
 Iterations | RANDchete (random) | MAXchete (maximize)
 --- | --- | ---
@@ -29,16 +29,15 @@ Iterations | RANDchete (random) | MAXchete (maximize)
 1000 iter | ![image](https://user-images.githubusercontent.com/76526314/219706410-985e57b5-5698-49e6-afdb-856fe01c073b.png) | ![image](https://user-images.githubusercontent.com/76526314/219707072-d8134441-64ba-41a3-a23a-74466f6c5bda.png)
 std (1000 iter) | &plusmn; 9.1  |  &plusmn; 3.9
 
-
 Compared to the random sample, the data is now more evenly distributed and the standard deviation has been reduced by over 2 times which shows library's effectiveness.
 
 # How does it work?
 
 There are three ways of creating your dataset: 
 
-- randchete -> Random approach 
-- seqchete -> Sequential approach 
-- maxchete -> Distribution approach
+- **randchete** -> Random approach 
+- **seqchete** -> Sequential approach 
+- **maxchete** -> Distribution approach
 
 Just instantiate the class and machete the data!
 
@@ -73,7 +72,7 @@ There is another useful function called merge_tiffs which can merge generated im
 
 ``` python
 from mapchete import merge_tiffs
-merge_tiffs()
+merge_tiffs(folder="raster_clip")
 ```
 <p align="center">
   <img width="400" alt="mapchete_final" src="https://user-images.githubusercontent.com/76526314/219876203-2e36d9b6-9edf-4982-b9ba-c3d8c559c962.png">
