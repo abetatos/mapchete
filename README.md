@@ -45,8 +45,8 @@ Just instantiate the class and machete the data!
 ```python 
 from mapchete import FARMchete, merge_tiffs
 
-mapchete = FARMchete().get("maxchete")
-mapchete = mapchete(input_file, size=512, output_path="raster_clip", clear_output_path=True, n_images=50, no_data_percentage = 0.2)
+MAPchete = FARMchete().get("maxchete")
+mapchete = MAPchete(input_file, size=512, output_path="raster_clip", clear_output_path=True, n_images=50, no_data_percentage = 0.2)
 mapchete.plot_bands()
 ```
 
