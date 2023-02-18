@@ -37,7 +37,7 @@ Compared to the random sample, the data is now more evenly distributed and the s
 There are three ways of creating your dataset: 
 
 - randchete -> Random approach 
-- seqchetel -> Sequential approach 
+- seqchete -> Sequential approach 
 - maxchete -> Distribution approach
 
 Just instantiate the class and machete the data!
