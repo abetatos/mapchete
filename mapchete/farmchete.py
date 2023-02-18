@@ -1,7 +1,3 @@
-import os
-import logging
-import shutil
-import tempfile
 from typing import Union
 
 import rasterio as rio

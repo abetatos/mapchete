@@ -6,7 +6,7 @@ import shutil
 import os
 
 import rasterio as rio
-import earthpy.plot as ep
+import rasterio.plot as rplt
 from rasterio.io import MemoryFile
 from rasterio.windows import get_data_window, transform
 
@@ -119,15 +119,19 @@ class BaseChete:
             raise ValueError("Looks like your data is empty")
             
     def output_mesage(self): 
-        valid_percentage = round(self.valid_dict[1] / (self.valid_dict[1] + self.valid_dict[0])*100, 1)
+        valid_percentage = round(self.valid_dict[1] / (self.valid_dict[1] + self.valid_dict[0] + 1e-12)*100, 1)
         self.logger.info(f"Process finished with {self.valid_dict[1]} files created"
                          f"which represents {valid_percentage}% of the indicated number.")
 
     def plot_bands(self): 
-        ep.plot_bands(self.array)
+        rplt.show(self.array, cmap="Greys")
+        
+    def plot_hist(self, delete_nodata = True):  
+        array = np.where(self.array != self.nodata, self.array, 0) if delete_nodata else array
+        rplt.show_hist(array)
         
     def get_3Ddistribution(self, permute = (0,1)):
-        final_counter_array = self.final_counter_array.permutate(permute)
+        final_counter_array = np.transpose(self.final_counter_array, permute)
         counter_resized = resize(final_counter_array, (300, 300))
 
         xx, yy =  [], []

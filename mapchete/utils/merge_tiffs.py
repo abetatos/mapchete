@@ -4,6 +4,7 @@ from pathlib import Path
 
 import logging
 import rasterio as rio
+import rasterio.plot as rplt
 from rasterio.merge import merge
 
 logger = logging.getLogger("Clip")
@@ -22,6 +23,9 @@ def merge_tiffs(folder: str = "raster_clip", output_folder: str = None, output_f
         raster = rio.open(p)
         raster_to_mosiac.append(raster)
         
+    if not raster_to_mosiac: 
+        raise FileNotFoundError("Looks like your directory does not have any tiff file")
+    
     mosaic, output = merge(raster_to_mosiac)
     
     output_meta = raster.meta.copy()
@@ -34,6 +38,7 @@ def merge_tiffs(folder: str = "raster_clip", output_folder: str = None, output_f
     
     with rio.open(output_filename, "w", **output_meta) as m:
         m.write(mosaic)
-    
+        
+    rplt.show(mosaic, cmap="Greys")
     logger.info(f"File created in {output_filename}")
     

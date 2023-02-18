@@ -1,0 +1,5 @@
+earthpy==0.9.4
+matplotlib==3.5.3
+scikit-image==0.19.3
+tqdm==4.64.1
+numpy==1.21.5
