@@ -45,8 +45,8 @@ Just instantiate the class and machete the data!
 ```python 
 from mapchete import FARMchete, merge_tiffs
 
-MAPchete = FARMchete().get("maxchete")
-mapchete = MAPchete(input_file, size=512, output_path="raster_clip", clear_output_path=True, n_images=50, no_data_percentage = 0.2)
+mapchete = FARMchete(input_file).get("randchete")
+mapchete.get_rasters(n_images=100, size=512 , no_data_percentage = 0.3, output_path="raster_clip", clear_output_path=True)
 mapchete.plot_bands()
 ```
 
@@ -70,7 +70,7 @@ fig, ax = maxchete.get_3Ddistribution()
 </p>
 
 
-There is another useful function called merge_tiffs which can merge generated images to se how the distribution was generated. Useful when lower sampling as higher ones should take the complete extent of the original input. 
+There is another useful function called merge_tiffs which can merge generated images to se how the distribution was generated. If you use lower sampling, this becomes a useful tool, but if you opt for higher sampling, the algorithm should be capable of generating the complete extent of the original image.
 
 ``` python
 from mapchete import merge_tiffs
