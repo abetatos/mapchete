@@ -43,11 +43,11 @@ There are three ways of creating your dataset:
 Just instantiate the class and machete the data!
 
 ```python 
-from mapchete import FARMchete, merge_tiffs
+from mapchete import FARMchete
 
-mapchete = FARMchete(input_file).get("randchete")
-mapchete.get_rasters(n_images=100, size=512 , no_data_percentage = 0.3, output_path="raster_clip", clear_output_path=True)
-mapchete.plot_bands()
+maxchete = FARMchete(input_file).get("maxchete")
+maxchete.get_rasters(n_images=100, size=512 , no_data_percentage = 0.3, output_path="raster_clip", clear_output_path=True)
+maxchete.plot_bands()
 ```
 
 <p align="center">
@@ -57,7 +57,7 @@ mapchete.plot_bands()
 ### Run to get the tiles: 
 
 ```python
-mapchete.get_rasters()
+maxchete.get_rasters()
 ```
 
 ### Study the output
