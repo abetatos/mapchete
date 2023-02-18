@@ -51,7 +51,7 @@ mapchete.plot_bands()
 ```
 
 <p align="center">
-  <img width="500" alt="mapchete_final" src="https://user-images.githubusercontent.com/76526314/219869636-654550e6-f2c3-4977-a6b9-6fe4a8195cc7.png">
+  <img width="500" alt="mapchete_final" src="https://user-images.githubusercontent.com/76526314/219875276-3a05f852-d68b-4f41-a684-f48147edbda5.png">
 </p>
 
 ### Run to get the tiles: 
