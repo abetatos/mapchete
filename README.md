@@ -72,7 +72,7 @@ There is another useful function called merge_tiffs which can merge generated im
 
 ``` python
 from mapchete import merge_tiffs
-merge_tiffs()
+merge_tiffs(folder="raster_clip")
 ```
 <p align="center">
   <img width="400" alt="mapchete_final" src="https://user-images.githubusercontent.com/76526314/219876203-2e36d9b6-9edf-4982-b9ba-c3d8c559c962.png">
