@@ -9,7 +9,19 @@ from .basechete import BaseChete
 
 class MaxChete(BaseChete):
 
-    def get_window(self, size, no_data_percentage):
+    def get_window(self, size: int, no_data_percentage: float):
+        """It generates windows based on a probabilistic approach.
+        Holding in memory a map of spatial distribution it can generate images in lower density zones.
+        It will filter images with a number of nodata greater than the given percentage, but it stills
+        saves the nodata to avoid it further later and optimize the process.  
+
+        Args:
+            size (int): Output size of tiles
+            no_data_percentage (float): Percentage of no data to perform filtering
+
+        Returns:
+            rasterio.windows.Window: A rasterio window object
+        """
         output_length = size**2
 
         stride = int(max(size/10, random.random()*(size-1)))
@@ -52,7 +64,15 @@ class MaxChete(BaseChete):
             self.distribution_array[min_i: size + min_i, min_j: size + min_j] += 1
             return Window(min_j, min_i, size, size)
 
-    def _get_rasters(self, n_images: int, size: int, no_data_percentage: float, identifier: str, output_path: str):
+    def _get_rasters(self, n_images: int, size: int, no_data_percentage: float, output_path: str):
+        """Performs the iteration, calls the get_window function and save the rasters.
+
+        Args:
+            n_images (int): Output number of images
+            size (int): Square size of the output images
+            no_data_percentage (float): Percentage used to filer images. If an image has more nodata than this value it will be discarded
+            output_path (str): Where to generate the now geofiles
+        """
         self.counter_array = np.zeros_like(self.array)
         self.distribution_array = np.zeros_like(self.array)
 
@@ -67,7 +87,7 @@ class MaxChete(BaseChete):
                 continue
 
             new_array, profile, valid = self.get_raster_from_window(window, size, no_data_percentage)
-            self.save_raster(new_array, output_path, profile, valid, f"{identifier}_maxchete_{n_image}")
+            self.save_raster(new_array, output_path, profile, valid, f"{self.identifier}_maxchete_{n_image}")
 
             n_image += 1
             pbar.update(1)
