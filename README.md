@@ -51,7 +51,7 @@ mapchete.plot_bands()
 ```
 
 <p align="center">
-  <img width="500" alt="mapchete_final" src="https://user-images.githubusercontent.com/76526314/219875276-3a05f852-d68b-4f41-a684-f48147edbda5.png">
+  <img width="400" alt="mapchete_final" src="https://user-images.githubusercontent.com/76526314/219875276-3a05f852-d68b-4f41-a684-f48147edbda5.png">
 </p>
 
 ### Run to get the tiles: 
@@ -66,7 +66,7 @@ fig, ax = maxchete.get_3Ddistribution()
 ```
 
 <p align="center">
-  <img width="500" alt="mapchete_final" src="https://user-images.githubusercontent.com/76526314/219869717-154774f3-5e5a-4fdf-97b5-cf04dd02a375.png">
+  <img width="500" alt="mapchete_final" src="https://user-images.githubusercontent.com/76526314/219876116-ce051ecf-021d-4996-bc1b-e68274f624b1.png">
 </p>
 
 
@@ -75,9 +75,17 @@ There is another useful function called merge_tiffs which can merge generated im
 from mapchete import merge_tiffs
 merge_tiffs()
 ```
-
 <p align="center">
-  <img width="500" alt="mapchete_final" src="https://user-images.githubusercontent.com/76526314/219869787-9dc9fd06-7300-45f3-baba-2e3d8d0ca037.png">
+  <img width="400" alt="mapchete_final" src="https://user-images.githubusercontent.com/76526314/219876203-2e36d9b6-9edf-4982-b9ba-c3d8c559c962.png">
 </p>
 
+# Instalation
 
+At the moment there is no suitable distribution in PyPi, so installing must be done trough the setup.py
+```
+git clone https://github.com/abetatos/mapchete.git 
+cd mapchete
+python setup.py install
+```
+
+In older versions of python (<=3.7) rasterio gives some trouble installing, it is recommended to use newer versions (>3.7) or conda for the instalation. Rasterio version is not fixed in the requirements to give more versatility to the user but it was tested with version==1.2.10. 
