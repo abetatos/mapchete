@@ -10,10 +10,15 @@ from .maxchete import MaxChete
 
 class FARMchete():
 
-    def __init__(self, filepath) -> None:
+    def __init__(self, filepath: str) -> None:
+        """Farm method to return the desired class, pases the filename to the functions to instantiate them
+
+        Args:
+            filepath (str): Input filepath
+        """
         self.filepath = filepath
 
-    def get(self, crop_type):
+    def get(self, crop_type: str):
         assert crop_type in {"randchete", "seqchete", "maxchete"}
 
         if crop_type == "randchete":

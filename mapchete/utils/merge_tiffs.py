@@ -12,6 +12,16 @@ logger.setLevel(logging.INFO)
 
 
 def merge_tiffs(folder: str = "raster_clip", output_folder: str = None, output_filename = "mosaic_output.tif"):
+    """ Merges all the tiff files in a given folder, generates the merge on a given folder and displays it.
+
+    Args:
+        folder (str, optional): Input folder where files are located. Defaults to "raster_clip".
+        output_folder (str, optional): Output folder. Defaults to None.
+        output_filename (str, optional): Output name of the file. Defaults to "mosaic_output.tif".
+
+    Raises:
+        FileNotFoundError: _description_
+    """
 
     output_folder = os.path.join(folder, "merged") if not output_folder else output_folder
     Path(output_folder).mkdir(parents=True, exist_ok=True)
