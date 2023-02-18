@@ -46,7 +46,6 @@ Just instantiate the class and machete the data!
 from mapchete import FARMchete
 
 maxchete = FARMchete(input_file).get("maxchete")
-maxchete.get_rasters(n_images=100, size=512 , no_data_percentage = 0.3, output_path="raster_clip", clear_output_path=True)
 maxchete.plot_bands()
 ```
 
@@ -57,7 +56,7 @@ maxchete.plot_bands()
 ### Run to get the tiles: 
 
 ```python
-maxchete.get_rasters()
+maxchete.get_rasters(n_images=100, size=512 , no_data_percentage = 0.3, output_path="raster_clip", clear_output_path=True)
 ```
 
 ### Study the output
