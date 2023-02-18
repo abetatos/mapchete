@@ -43,8 +43,28 @@ There are three ways of creating your dataset:
 Just instantiate the class and machete the data!
 
 ```python 
-mc = MAPchete(input_file, size=512, output_path="raster_clip", clear_output_path=True).get("maxchete")
-mc.get_rasters(identifier=input_file, n_images=100, no_data_percentage = 0.2)
+from mapchete import FARMchete, merge_tiffs
 
+maxchete = FARMchete().get("maxchete")
+maxchete = maxchete(input_file, size=512, output_path="raster_clip", clear_output_path=True, n_images=100, no_data_percentage = 0.2)
+maxchete.get_rasters()
 ```
+```python 
+fig, ax = maxchete.get_3Ddistribution()
+```
+
+<p align="center">
+  <img width="500" alt="mapchete_final" src="https://user-images.githubusercontent.com/76526314/219824844-05a6f1d4-062f-428f-8384-e6544c699d90.png">
+</p>
+
+
+There is another useful function called merge_tiffs which can merge generated images to se whether it has been properly created. 
+``` python
+from mapchete import merge_tiffs
+merge_tiffs()
+```
+<p align="center">
+  <img width="300" alt="mapchete_final" src="https://user-images.githubusercontent.com/76526314/219824751-39470910-f69d-4bc0-a028-5f2567bcc8e5.png">
+</p>
+
 
