@@ -6,6 +6,7 @@ import shutil
 import os
 
 import rasterio as rio
+import earthpy.plot as ep
 from rasterio.io import MemoryFile
 from rasterio.windows import get_data_window, transform
 
@@ -122,8 +123,11 @@ class BaseChete:
         self.logger.info(f"Process finished with {self.valid_dict[1]} files created"
                          f"which represents {valid_percentage}% of the indicated number.")
 
-    def get_3Ddistribution(self):
-        final_counter_array = self.final_counter_array
+    def plot_bands(self): 
+        ep.plot_bands(self.array)
+        
+    def get_3Ddistribution(self, permute = (0,1)):
+        final_counter_array = self.final_counter_array.permutate(permute)
         counter_resized = resize(final_counter_array, (300, 300))
 
         xx, yy =  [], []
