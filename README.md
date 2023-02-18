@@ -69,7 +69,7 @@ fig, ax = maxchete.get_3Ddistribution()
 </p>
 
 
-There is another useful function called merge_tiffs which can merge generated images to se how the distribution was generated. If you use lower sampling, this becomes a useful tool, but if you opt for higher sampling, the algorithm should be capable of generating the complete extent of the original image.
+There is another useful function called merge_tiffs which can merge generated images to se check the distribution fo tiles. If you use lower sampling, this becomes a useful tool, but if you opt for higher sampling, the algorithm should be capable of generating the complete extent of the original image.
 
 ``` python
 from mapchete import merge_tiffs
