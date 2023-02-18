@@ -23,7 +23,7 @@ With an input of shape:
 
 Mapchete obtains: 
 
-Iterations | Random | MAXchete
+Iterations | RANDchete (random) | MAXchete (maximize)
 --- | --- | ---
 100 iter | ![](https://user-images.githubusercontent.com/76526314/219666167-64e7f0a8-df76-4422-8665-a6f908b0a98b.png) | ![](https://user-images.githubusercontent.com/76526314/219665645-7eefad2e-bc33-43cb-99fa-5374f6c84ea4.png)
 1000 iter | ![image](https://user-images.githubusercontent.com/76526314/219706410-985e57b5-5698-49e6-afdb-856fe01c073b.png) | ![image](https://user-images.githubusercontent.com/76526314/219707072-d8134441-64ba-41a3-a23a-74466f6c5bda.png)
@@ -36,9 +36,9 @@ Compared to the random sample, the data is now more evenly distributed and the s
 
 There are three ways of creating your dataset: 
 
-- random
-- sequential
-- maxchete
+- randchete -> Random approach 
+- seqchetel -> Sequential approach 
+- maxchete -> Distribution approach
 
 Just instantiate the class and machete the data!
 
