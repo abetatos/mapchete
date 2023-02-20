@@ -10,7 +10,7 @@
 
 Welcome to my Github project! This repository was created to assist with the preparation of geospatial data for deep learning purposes. Specifically, the project focuses on efficiently cropping large datasets into smaller tiles, with the goal of generating a dataset with minimum overlap between tiles (Which could result in the loss of representativeness) and avoiding nodata tiles. This process is essential for achieving optimal model performance, and can be applied to various other applications within the geospatial imagery field. Thank you for checking out my project, and feel free to explore the code and contribute to its development!
 
-# What does MAPchete has to offer?
+# What does MAPchete have to offer?
 
 It generates patches based on a probabilistic approach that tries to augment the covered area distributing images more efficiently while avoiding images with a nodata percentage avobe a given threshold. It is perfect for deep learning purposes as it will maximize the outcome of your model! 
 
