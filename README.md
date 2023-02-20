@@ -55,7 +55,7 @@ maxchete.plot_bands()
 ### Run to get the tiles: 
 
 ```python
-maxchete.get_rasters(n_images=100, size=512 , no_data_percentage = 0.3, output_path="raster_clip", clear_output_path=True)
+maxchete.get_rasters(n_images=100, size=512 , no_data_percentage=0.3, output_path="raster_clip", clear_output_path=True)
 ```
 
 ### Study the output
