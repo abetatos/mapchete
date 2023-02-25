@@ -72,30 +72,30 @@ class BaseChete:
         pass
 
     @abstractmethod
-    def _get_rasters(self, n_images: int, size: int, no_data_percentage: float, output_path: str):
+    def _get_rasters(self, avg_density: float, size: int, no_data_percentage: float, output_path: str):
         """Main function of each algorithm. It generates a given number of files in a given folder
 
         Args:
-            n_images (int): Output number of images
+            avg_density (float): Average density of each pixel to finish algorithm.
             size (int): Square size of the output images
             no_data_percentage (float): Percentage used to filer images. If an image has more nodata than this value it will be discarded
             output_path (str): Where to generate the now geofiles
         """
         pass
 
-    def get_rasters(self, n_images: int = 20, size: int = 512, no_data_percentage: float = 0.2,
+    def get_rasters(self, avg_density: float = 4, size: int = 512, no_data_percentage: float = 0.2,
                     output_path: str = "raster_clip", clear_output_path: bool = False) -> None:
         """Calls the main function and can clear the output path and launch a finaliztion logger.
 
         Args:
-            n_images (int): Output number of images
+            avg_density (float): Average density of each pixel to finish algorithm.
             size (int): Square size of the output images
             no_data_percentage (float): Percentage used to filer images. If an image has more nodata than this value it will be discarded
             output_path (str): Where to generate the now geofiles
             clear_output_path (bool, optional): If set to True it will delete all files in the output path. Defaults to False.
         """
         self.clear_opath(output_path, clear_output_path)
-        self._get_rasters(n_images, size, no_data_percentage, output_path)
+        self._get_rasters(avg_density, size, no_data_percentage, output_path)
         self.output_mesage()
 
     @staticmethod

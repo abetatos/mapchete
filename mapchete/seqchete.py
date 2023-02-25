@@ -21,11 +21,11 @@ class SeqChete(BaseChete):
         """
         return Window(row_off=i, col_off=j, width=size, height=size)
 
-    def _get_rasters(self, n_images: int, size: int, no_data_percentage: float, output_path: str):
+    def _get_rasters(self, avg_density: float, size: int, no_data_percentage: float, output_path: str):
         """Performs the iteration, calls the get_window function and save the rasters.
 
         Args:
-            n_images (int): Output number of images
+            avg_density (float): Average density of each pixel to finish algorithm.
             size (int): Square size of the output images
             no_data_percentage (float): Percentage used to filer images. If an image has more nodata than this value it will be discarded
             output_path (str): Where to generate the now geofiles
@@ -37,7 +37,7 @@ class SeqChete(BaseChete):
         i_steps = int(np.ceil(self.height/size))
         j_steps = int(np.ceil(self.width/size))
 
-        pbar = tqdm(total=n_images)
+        pbar = tqdm()
         while True:
             self.check_iteration()
             for i in range(i_steps):
@@ -46,6 +46,9 @@ class SeqChete(BaseChete):
                     new_array, profile, valid = self.get_raster_from_window(window, size, no_data_percentage)
 
                     self.counter_array[i: size + i, j: size + j] += 1
+                    mean_density = round(self.counter_array.mean(), 2)
+                    pbar.set_description(f"Mean avg density {mean_density}")
+            
                     if not valid:
                         continue
                     self.distribution_array[i*size: (i+1)*size, j*size: (j+1) * size] += 1
@@ -53,7 +56,7 @@ class SeqChete(BaseChete):
 
                     images_done += 1
                     pbar.update(1)
-                    if images_done >= n_images:
+                    if mean_density >= avg_density:
                         break
                 else:
                     continue

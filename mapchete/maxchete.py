@@ -64,11 +64,11 @@ class MaxChete(BaseChete):
             self.distribution_array[min_i: size + min_i, min_j: size + min_j] += 1
             return Window(min_j, min_i, size, size)
 
-    def _get_rasters(self, n_images: int, size: int, no_data_percentage: float, output_path: str):
+    def _get_rasters(self, avg_density: float, size: int, no_data_percentage: float, output_path: str):
         """Performs the iteration, calls the get_window function and save the rasters.
 
         Args:
-            n_images (int): Output number of images
+            avg_density (float): Average density of each pixel to finish algorithm.
             size (int): Square size of the output images
             no_data_percentage (float): Percentage used to filer images. If an image has more nodata than this value it will be discarded
             output_path (str): Where to generate the now geofiles
@@ -77,11 +77,14 @@ class MaxChete(BaseChete):
         self.distribution_array = np.zeros_like(self.array)
 
         n_image = 0
-        pbar = tqdm(total=n_images)
+        pbar = tqdm()
+
         while True:
             self.check_iteration()
 
             window = self.get_window(size, no_data_percentage)
+            mean_density = round(self.counter_array.mean(), 2)
+            pbar.set_description(f"Mean avg density {mean_density}")
             if window is None:
                 self.valid_dict[0] += 1
                 continue
@@ -91,5 +94,5 @@ class MaxChete(BaseChete):
 
             n_image += 1
             pbar.update(1)
-            if n_image >= n_images:
+            if mean_density >= avg_density:
                 break
