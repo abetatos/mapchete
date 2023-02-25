@@ -55,7 +55,8 @@ maxchete.plot_bands()
 ### Run to get the tiles: 
 
 ```python
-maxchete.get_rasters(n_images=100, size=512 , no_data_percentage=0.3, output_path="raster_clip", clear_output_path=True)
+maxchete.get_rasters(avg_density=4, size=512 , no_data_percentage=0.3, output_path="raster_clip", clear_output_path=True)
+# avg_density In how many images a given pixel of the input image will be in average.
 ```
 
 ### Study the output
