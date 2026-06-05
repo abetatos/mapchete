@@ -48,31 +48,56 @@ POLYGON = np.array([
 
 
 def _terrain_heightfield(size: int, seed: int = 7) -> np.ndarray:
-    """A synthetic mountainous height field with ridged striations."""
+    """A synthetic volcano: tall in the centre, fading to the sides, irregular.
+
+    The summit crater and the eroded gullies on the flanks create strong relief
+    (high texture), while the surroundings stay smooth -- so a content-aware
+    strategy like ``infochete`` has a clear reason to concentrate tiles there.
+    """
     rng = np.random.default_rng(seed)
     yy, xx = (np.mgrid[0:size, 0:size].astype(float) / size)  # 0..1
 
-    z = np.zeros((size, size))
-    # Large-scale massif so the terrain has an overall relief.
-    z += 1.3 * np.exp(-(((xx - 0.5) ** 2 + (yy - 0.55) ** 2) / 0.18))
-    z += 0.7 * np.exp(-(((xx - 0.3) ** 2 + (yy - 0.35) ** 2) / 0.05))
-    # Ridged striations at several orientations/frequencies (sharp crests).
-    for theta_deg, freq, amp in [(20, 8, 0.55), (75, 13, 0.40),
-                                 (115, 21, 0.26), (50, 33, 0.14)]:
-        th = np.radians(theta_deg)
-        proj = xx * np.cos(th) + yy * np.sin(th)
-        ridge = 1.0 - np.abs(np.sin(2 * np.pi * freq * proj + rng.uniform(0, 2 * np.pi)))
-        z += amp * ridge ** 2
-    z += 0.05 * rng.standard_normal((size, size))
-    return gaussian(z, sigma=1.0)
+    # Off-centre so the cone is not perfectly symmetric.
+    dx, dy = xx - 0.52, yy - 0.48
+    r = np.hypot(dx, dy)
+    theta = np.arctan2(dy, dx)
+
+    # Irregular (wobbly) radius: the volcano is not a perfect circle.
+    wobble = (1.0 + 0.22 * np.sin(3 * theta + 0.6)
+              + 0.12 * np.sin(7 * theta) + 0.06 * np.sin(13 * theta + 1.0))
+    r_eff = r / wobble
+
+    # Steep linear cone: tall at the centre, dropping to the sides. A linear
+    # (rather than gaussian) profile gives a constant, clearly-lit slope, so the
+    # hillshade reads as a real 3D dome.
+    R = 0.42
+    cone = np.clip(1.0 - r_eff / R, 0.0, None) ** 1.25
+    z = 2.2 * cone
+    # Small summit crater (a shallow dip right at the top), leaving a raised rim
+    # without turning the peak into a dark hole.
+    z -= 0.25 * np.exp(-(r_eff / 0.04) ** 2)
+
+    # Erosion gullies on the flanks: secondary texture (kept subtle so the cone
+    # dominates), strong on the slopes and absent on the summit and surroundings.
+    flank = np.exp(-((r_eff - 0.20) / 0.13) ** 2)
+    gullies = (0.022 * np.sin(16 * theta) + 0.012 * np.sin(34 * theta + 2.0)
+               + 0.008 * rng.standard_normal((size, size)))
+    z += flank * gullies
+
+    return gaussian(z, sigma=0.8)
 
 
-def _hillshade(z: np.ndarray, azimuth: float = 315, altitude: float = 45) -> np.ndarray:
-    """Standard hillshade of a height field, returned in 0..1."""
+def _hillshade(z: np.ndarray, azimuth: float = 315, altitude: float = 35,
+               z_factor: float = 70.0) -> np.ndarray:
+    """Standard hillshade of a height field, returned in 0..1.
+
+    ``z_factor`` is the vertical exaggeration; it is large here because the cone
+    spans most of the (unit) raster and would otherwise look almost flat.
+    """
     az = np.radians(360.0 - azimuth + 90.0)
     alt = np.radians(altitude)
     dy, dx = np.gradient(z)
-    slope = np.arctan(8.0 * np.hypot(dx, dy))  # vertical exaggeration
+    slope = np.arctan(z_factor * np.hypot(dx, dy))
     aspect = np.arctan2(dy, -dx)
     shaded = np.sin(alt) * np.cos(slope) + np.cos(alt) * np.sin(slope) * np.cos(az - aspect)
     return np.clip(shaded, 0.0, 1.0)
@@ -227,9 +252,11 @@ def main(outdir: str = "examples/output") -> dict:
             valid = tiler.array != tiler.nodata
             _save_input(tiler, out)
         _save_distribution(tiler, name, metrics, out)
-        # 3D surface + a tile montage for the two "smart" strategies.
-        if name in ("maxchete", "infochete"):
+        # 3D surfaces (randchete kept for the spiky-vs-even contrast) and a tile
+        # montage for the two "smart" strategies.
+        if name in ("randchete", "maxchete", "infochete"):
             _save_surface(tiler, name, out)
+        if name in ("maxchete", "infochete"):
             _save_tile_montage(tiles_dir, name, out)
 
     _save_comparison(distributions, valid, out)
