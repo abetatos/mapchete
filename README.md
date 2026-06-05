@@ -111,11 +111,11 @@ Maxima of each column are in **bold**.
 
 | Strategy | Tiles | Coverage | Std (evenness) |
 | --- | --- | --- | --- |
-| poischete | 37 | 94% | 0.93 |
+| poischete | 37 | 94% | **0.93** |
 | maxchete | **70** | **99%** | 1.00 |
 | slidechete | 63 | 97% | 1.20 |
 | infochete | 66 | **99%** | 1.37 |
-| randchete | 60 | 90% | **1.90** |
+| randchete | 60 | 90% | 1.90 |
 
 Random cropping (`randchete`) piles tiles into arbitrary hotspots (high std) while still leaving gaps. `maxchete`, `poischete` and `slidechete` instead spread tiles evenly (low std, high coverage). `infochete` is the odd one out *on purpose*: its higher std comes from deliberately concentrating tiles on the high-relief flanks and crater of the volcano — see the red hotspot over the textured centre in its panel above.
 
