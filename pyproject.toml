@@ -1,0 +1,54 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "mapchete"
+dynamic = ["version"]
+description = "Crop geospatial data for deep learning, maximizing the spatial distribution of the generated tiles."
+readme = "README.md"
+license = "Apache-2.0"
+requires-python = ">=3.9"
+authors = [
+    { name = "Alejandro Betato Sancerni", email = "abetatos@gmail.com" },
+]
+keywords = ["geospatial", "raster", "deep-learning", "tiling", "rasterio"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Operating System :: OS Independent",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: GIS",
+]
+dependencies = [
+    "numpy>=1.21",
+    "rasterio>=1.3",
+    "matplotlib>=3.5",
+    "scikit-image>=0.19",
+    "tqdm>=4.64",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest>=7.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/abetatos/mapchete"
+Repository = "https://github.com/abetatos/mapchete"
+
+[tool.hatch.version]
+path = "mapchete/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["mapchete"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"

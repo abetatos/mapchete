@@ -31,21 +31,62 @@ std (1000 iter) | &plusmn; 9.1  |  &plusmn; 3.9
 
 Compared to the random sample, the data is now more evenly distributed and the standard deviation has been reduced by over 2 times which shows library's effectiveness.
 
+# See it in action
+
+The library ships a runnable demo that synthesizes a **mountainous hillshade clipped to an irregular polygon** — valid data surrounded by `nodata`, exactly the kind of geospatial raster mapchete targets — and runs every strategy on it:
+
+```bash
+uv run python examples/demo.py   # writes the images below to examples/output/
+```
+
+**Input** — a hillshade with ridges and striations over a `nodata` background:
+
+<p align="center">
+  <img width="340" alt="synthetic mountainous input" src="docs/img/input.png">
+</p>
+
+**Tile coverage per strategy** — each heatmap counts how many tiles cover each pixel; a lower standard deviation over the footprint means a more even spread:
+
+<p align="center">
+  <img width="780" alt="coverage comparison" src="docs/img/comparison.png">
+</p>
+
+On this run the metrics over the valid footprint were (lower **std** = more even, higher **coverage** = fewer gaps):
+
+| Strategy | Tiles | Coverage | Std (evenness) |
+| --- | --- | --- | --- |
+| infochete | 65 | 100% | **0.73** |
+| maxchete | 67 | 99% | 1.02 |
+| poischete | 35 | 85% | 1.07 |
+| slidechete | 63 | 97% | 1.20 |
+| randchete | 59 | 87% | 1.89 |
+
+The random baseline (`randchete`) clusters tiles into hotspots (high std) while still leaving gaps. The smart strategies spread the tiles evenly across the whole footprint — or, in the case of `infochete`, deliberately concentrate them on the most textured terrain while still covering everything.
+
 # How does it work?
 
-There are three ways of creating your dataset: 
+There are several ways of creating your dataset, each with a different sampling strategy:
 
-- **randchete** -> Random approach 
-- **seqchete** -> Sequential approach 
-- **maxchete** -> Distribution approach
+| Strategy | Approach |
+| --- | --- |
+| **randchete** | Random windows (baseline). |
+| **maxchete** | Probabilistic max-coverage: steers tiles towards low-density zones for an even spread. |
+| **infochete** | Content-aware: samples more tiles where the image is informative (high texture/edges), fewer in flat areas. |
+| **poischete** | Blue-noise (Poisson-disk): tiles with a guaranteed minimum spacing — an even, cluster-free layout with controlled overlap. |
+| **slidechete** | Deterministic sliding window with a user-defined `overlap` — reproducible classic tiling. |
 
 Just instantiate the class and machete the data!
 
 ```python 
-from mapchete import FARMchete
+from mapchete import Tiler
 
-maxchete = FARMchete(input_file).get("maxchete")
+maxchete = Tiler.from_name(input_file, "maxchete")
 maxchete.plot_bands()
+
+# Strategies with parameters can be built explicitly:
+from mapchete import SlidingWindow, PoissonDisk
+slide = Tiler(input_file, SlidingWindow(overlap=0.5))
+pois  = Tiler(input_file, PoissonDisk(min_dist=400))
 ```
 
 <p align="center">
@@ -58,6 +99,12 @@ maxchete.plot_bands()
 maxchete.get_rasters(avg_density=4, size=512 , no_data_percentage=0.3, output_path="raster_clip", clear_output_path=True)
 # avg_density In how many output images a given pixel of the input image will be in average.
 ```
+
+Each saved tile is a GeoTIFF (plus a pickle of its source `Window`). Edge tiles are kept only when their `nodata` fraction stays within `no_data_percentage`:
+
+<p align="center">
+  <img width="540" alt="sample generated tiles" src="docs/img/tiles.png">
+</p>
 
 ### Study the output
 ```python 
@@ -79,13 +126,28 @@ merge_tiffs(folder="raster_clip")
   <img width="400" alt="mapchete_final" src="https://user-images.githubusercontent.com/76526314/219876203-2e36d9b6-9edf-4982-b9ba-c3d8c559c962.png">
 </p>
 
-# Instalation
+# Installation
 
-At the moment there is no suitable distribution in PyPi, so installing must be done trough the setup.py
-```
-git clone https://github.com/abetatos/mapchete.git 
+There is no PyPI release yet, so install from source. The project ships a
+standard `pyproject.toml`, so any modern installer works:
+
+```bash
+git clone https://github.com/abetatos/mapchete.git
 cd mapchete
-python setup.py install
+pip install .
 ```
 
-In older versions of python (<=3.7) rasterio gives some trouble installing, it is recommended to use newer versions (>3.7) or conda for the instalation. Rasterio version is not fixed in the requirements to give more versatility to the user but it was tested with version==1.2.10. 
+### Development setup
+
+The repository uses [uv](https://docs.astral.sh/uv/) for environment
+management. To set up an isolated environment with the test dependencies and run
+the suite:
+
+```bash
+uv sync --extra test
+uv run pytest
+```
+
+`mapchete` requires Python >= 3.9. It was developed against `rasterio` 1.5, but
+the dependency is only lower-bounded (`>=1.3`) to give the user more
+flexibility.

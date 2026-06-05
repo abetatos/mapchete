@@ -1,29 +1,15 @@
-from typing import Union
+"""Backwards-compatible factory.
 
-import rasterio as rio
-from rasterio.windows import get_data_window, transform
+``FARMchete`` predates the :class:`~mapchete.core.Tiler` API and is kept so older
+code (and the example notebook) keeps working. New code should prefer
+``Tiler.from_name(path, "maxchete")`` or ``Tiler(path, MaxCoverage())``.
+"""
+from .core import Tiler
 
-from .randchete import RandChete
-from .seqchete import SeqChete
-from .maxchete import MaxChete
 
-
-class FARMchete():
-
+class FARMchete:
     def __init__(self, filepath: str) -> None:
-        """Farm method to return the desired class, pases the filename to the functions to instantiate them
-
-        Args:
-            filepath (str): Input filepath
-        """
         self.filepath = filepath
 
-    def get(self, crop_type: str):
-        assert crop_type in {"randchete", "seqchete", "maxchete"}
-
-        if crop_type == "randchete":
-            return RandChete(self.filepath)
-        if crop_type == "seqchete":
-            return SeqChete(self.filepath)
-        if crop_type == "maxchete":
-            return MaxChete(self.filepath)
+    def get(self, crop_type: str) -> Tiler:
+        return Tiler.from_name(self.filepath, crop_type)
