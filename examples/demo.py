@@ -227,9 +227,11 @@ def main(outdir: str = "examples/output") -> dict:
             valid = tiler.array != tiler.nodata
             _save_input(tiler, out)
         _save_distribution(tiler, name, metrics, out)
-        # 3D surface + a tile montage for the two "smart" strategies.
-        if name in ("maxchete", "infochete"):
+        # 3D surfaces (randchete kept for the spiky-vs-even contrast) and a tile
+        # montage for the two "smart" strategies.
+        if name in ("randchete", "maxchete", "infochete"):
             _save_surface(tiler, name, out)
+        if name in ("maxchete", "infochete"):
             _save_tile_montage(tiles_dir, name, out)
 
     _save_comparison(distributions, valid, out)

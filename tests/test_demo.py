@@ -34,6 +34,7 @@ def test_demo_generates_images_and_proves_purpose(demo_module, tmp_path):
                 "11_comparison.png",
                 "10_distribution_maxchete.png",
                 "10_distribution_infochete.png",
+                "20_surface_randchete.png",
                 "20_surface_maxchete.png",
                 "20_surface_infochete.png",
                 "30_tiles_maxchete.png",

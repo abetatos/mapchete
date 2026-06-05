@@ -21,16 +21,6 @@ With an input of shape:
   <img width="300" alt="mapchete_final" src="https://user-images.githubusercontent.com/76526314/219682129-756f265c-6f4c-4c20-bc2e-bc5e438f4721.png">
 </p>
 
-How is the spatial distribution of tiles? (Not normalized scales)
-
-Iterations | RANDchete (random) | MAXchete (maximize)
---- | --- | ---
-100 iter | ![](https://user-images.githubusercontent.com/76526314/219666167-64e7f0a8-df76-4422-8665-a6f908b0a98b.png) | ![](https://user-images.githubusercontent.com/76526314/219665645-7eefad2e-bc33-43cb-99fa-5374f6c84ea4.png)
-1000 iter | ![image](https://user-images.githubusercontent.com/76526314/219706410-985e57b5-5698-49e6-afdb-856fe01c073b.png) | ![image](https://user-images.githubusercontent.com/76526314/219707072-d8134441-64ba-41a3-a23a-74466f6c5bda.png)
-std (1000 iter) | &plusmn; 9.1  |  &plusmn; 3.9
-
-Compared to the random sample, the data is now more evenly distributed and the standard deviation has been reduced by over 2 times which shows library's effectiveness.
-
 # See it in action
 
 The library ships a runnable demo that synthesizes a **mountainous hillshade clipped to an irregular polygon** — valid data surrounded by `nodata`, exactly the kind of geospatial raster mapchete targets — and runs every strategy on it:
@@ -107,12 +97,16 @@ Each saved tile is a GeoTIFF (plus a pickle of its source `Window`). Edge tiles 
 </p>
 
 ### Study the output
+
+`get_3Ddistribution()` plots the tile coverage as a 3D surface — and the contrast is the whole point of the library. Random sampling piles up into sharp spikes (some areas over-sampled, others bare), while `maxchete` produces a smooth, even plateau:
+
 ```python 
 fig, ax = maxchete.get_3Ddistribution()
 ```
 
 <p align="center">
-  <img width="500" alt="mapchete_final" src="https://user-images.githubusercontent.com/76526314/219876116-ce051ecf-021d-4996-bc1b-e68274f624b1.png">
+  <img width="390" alt="randchete 3D coverage" src="docs/img/surface_randchete.png">
+  <img width="390" alt="maxchete 3D coverage" src="docs/img/surface_maxchete.png">
 </p>
 
 
