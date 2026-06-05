@@ -63,13 +63,13 @@ Tiler("HS.tif", PoissonDisk(min_dist=400))
 
 ## See it in action
 
-The repo ships a runnable demo that synthesizes a **mountainous hillshade clipped to an irregular polygon** (valid data surrounded by `nodata` — exactly what mapchete targets) and runs every strategy on it:
+The repo ships a runnable demo that synthesizes an **eroded volcano hillshade clipped to an irregular polygon** (valid data surrounded by `nodata` — exactly what mapchete targets) and runs every strategy on it:
 
 ```bash
 uv run python examples/demo.py     # writes the images below to examples/output/
 ```
 
-**Input** — a hillshade with ridges and striations over a `nodata` background:
+**Input** — a volcano (high at the centre, fading to the sides) with eroded gullies on its flanks, over a `nodata` background:
 
 <p align="center">
   <img width="320" alt="synthetic mountainous input" src="docs/img/input.png">
@@ -85,13 +85,13 @@ Metrics over the valid footprint for one run (lower **std** = more even, higher 
 
 | Strategy | Tiles | Coverage | Std (evenness) |
 | --- | --- | --- | --- |
-| infochete | 65 | 100% | **0.73** |
-| maxchete | 69 | 99% | 0.93 |
-| poischete | 37 | 93% | 0.95 |
+| poischete | 37 | 94% | **0.93** |
+| maxchete | 70 | 99% | 1.00 |
 | slidechete | 63 | 97% | 1.20 |
-| randchete | 68 | 91% | 2.31 |
+| infochete | 66 | 99% | 1.37 |
+| randchete | 60 | 90% | 1.90 |
 
-Random cropping (`randchete`) piles tiles into hotspots (high std) while still leaving gaps; the smart strategies spread them evenly across the whole footprint.
+Random cropping (`randchete`) piles tiles into arbitrary hotspots (high std) while still leaving gaps. `maxchete`, `poischete` and `slidechete` instead spread tiles evenly (low std, high coverage). `infochete` is the odd one out *on purpose*: its higher std comes from deliberately concentrating tiles on the high-relief flanks and crater of the volcano — see the red hotspot over the textured centre in its panel above.
 
 ### 3D coverage surface
 
